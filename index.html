@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Random Quotes Machine</title>
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300|Lato:100i" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            color: white;
+        }
+
+        #quote-container {
+            width: 50%;
+            height: auto;
+            padding: 15px;
+            border: 1px solid white;
+            border-radius: 5px;
+            background: linear-gradient(to top, violet, darkviolet);
+        }
+
+        #quote-text {
+            font-family: 'Josefin Sans', sans-serif;
+            text-align: left;
+        }
+
+        #quote-text h1 {
+            margin: 0;
+        }
+
+        #quote-author {
+            font-family: 'Lato', sans-serif;
+            text-align: right;
+        }
+
+        #button-section {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        #tweet-it,
+        #new-quote {
+            width: 36px;
+            height: 36px;
+            border: 1px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            border-radius: 50%;
+            color: white;
+            transition: all 350ms;
+        }
+
+        #tweet-it:hover,
+        #new-quote:hover {
+            color: rgba(0, 0, 0, 0.5);
+            border-color: rgba(0, 0, 0, .5);
+        }
+
+        #tweet-it {
+            margin-right: 10px;
+        }
+
+        #footer {
+            color: grey;
+            font-family: 'Lato', sans-serif;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="quote-container">
+        <div><i class="fa fa-quote-right"></i></div>
+        <div id="quote-text"></div>
+        <div id="quote-author"></div>
+        <div id="button-section">
+            <a id="tweet-it" href="#" target="_blank" title="Tweet this quote"><i class="fa fa-twitter"></i></a>
+            <a id="new-quote" title="New random quote" href="#"><i class="fa fa-quote-right"></i></a>
+        </div>
+    </div>
+    <div id="footer">
+        <h3><em>by hien pham</em></h3>
+    </div>
+<script>
+    var QuoteGenerator = (function() {
+        var quotes = [
+            { text: "I have learned over the years that when one's mind is made up, this diminishes fear.", author: "Rosa Parks" },
+            { text: "Tough times never last, but tough people do.", author: "Dr. Robert Schuller" },
+            { text: "Start where you are. Use what you have. Do what you can.", author: "Arthur Ashe" },
+            { text: "Don't tell people how to do things, tell them what to do and let them surprise you with their results.", author: "George S. Patton" },
+            { text: "The crisis of today is the joke of tomorrow.", author: "H.G. Wells" },
+            { text: "Victory has a hundred fathers and defeat is an orphan.", author: "John F. Kennedy" },
+            { text: "Fall seven times and stand up eight.", author: "Anonymous" },
+            { text: "Life is 10 percent what happens to me and 90 percent of how I react to it.", author: "Charles Swindoll" },
+            { text: "If opportunity doesn't knock, build a door.", author: "Milton Berle" },
+            { text: "A year from now you may wish you had started today.", author: "Karen Lamb" },
+            { text: "Independence is happiness.", author: "Susan B. Anthony" },
+            { text: "I attribute my success to this: I never gave or took any excuse.", author: "Florence Nightingale" }
+        ];
+
+        return {
+            getNewQuote: function() {
+                var randomIdx = Math.floor(Math.random() * quotes.length);
+                return quotes[randomIdx];
+            }
+        }
+    })();
+
+    window.onload = function() {
+        function displayQuote() {
+            var quote = QuoteGenerator.getNewQuote();
+            setQuoteContent(quote);
+            setTweetURL(quote);
+        }
+
+        function setQuoteContent(quote) {
+            document.getElementById('quote-text').innerHTML = '<h1>' + quote.text + '</h1>';
+            document.getElementById('quote-author').innerHTML = '<h3>- ' + quote.author + '</h3>';
+        }
+
+        function setTweetURL(quote) {
+            var tweetLink = 'https://twitter.com/intent/tweet';
+            tweetLink += '?text=' + quote.text + ' ' + quote.author;
+            document.getElementById('tweet-it').setAttribute('href', tweetLink);
+        }
+
+        var newQuoteButton = document.getElementById('new-quote');
+        newQuoteButton.addEventListener('click', displayQuote, false);
+
+        displayQuote();
+    }
+</script>
+</body>
+</html>
